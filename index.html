@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Card</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sun {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #ffdb58 40%, transparent);
+            border-radius: 50%;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+        }
+
+        .eye {
+            width: 20px;
+            height: 20px;
+            background-color: black;
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+            left: 40px;
+        }
+
+        .cloud {
+            position: absolute;
+            top: 20px;
+            left: -150px;
+            width: 200px;
+            height: 100px;
+            background-color: #fff;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: cloudMove 20s linear infinite;
+        }
+
+        @keyframes cloudMove {
+            0% { transform: translateX(-150px); }
+            100% { transform: translateX(100%); }
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            width: 300px;
+            transition: transform 0.3s ease;
+            animation: fadeIn 1s ease;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .weather-info {
+            margin-top: 30px;
+        }
+
+        .weather-info p {
+            margin: 15px 0;
+            color: #555;
+            font-size: 16px;
+        }
+
+        strong {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .btn {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .wind {
+            width: 20px;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,0.6) 50%,rgba(255,255,255,0.6) 100%);
+            position: absolute;
+            top: calc(100% - 50px);
+            left: 10px;
+            animation: windMove 100s ease-in-out infinite alternate;
+        }
+
+        @keyframes windMove {
+            0% { transform: translateY(-10px); }
+            100% { transform: translateY(10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="sun" id="sun">
+        <div class="eye" id="eye"></div>
+    </div>
+    <div class="cloud"></div>
+    <div class="cloud" style="top: 100px; left: 200px;"></div>
+    <div class="card">
+        <h2>Weather Details</h2>
+        <div class="weather-info">
+            <p><strong>Location:</strong> {%location%}</p>
+            <p><strong>Temperature:</strong> {%temperature%} c</p>
+            <p><strong>Wind:</strong> {%wind%} kph</p>
+            <p><strong>Time:</strong> {%Time%}</p>
+        </div>
+        <button class="btn",id="cngCity">Change Location</button>
+        <div class="wind"></div>
+    </div>
+    <script>
+        document.getElementById("cngCity").onchange()
+        const sun = document.getElementById('sun');
+        const eye = document.getElementById('eye');
+
+        document.addEventListener('mousemove', (event) => {
+            const { clientX: mouseX, clientY: mouseY } = event;
+            const { left, top, width, height } = sun.getBoundingClientRect();
+            const centerX = left + width / 2;
+            const centerY = top + height / 2;
+            const angle = Math.atan2(mouseY - centerY, mouseX - centerX);
+            const eyeRadius = 10;
+            const eyeX = centerX + Math.cos(angle) * (width / 3) - eyeRadius;
+            const eyeY = centerY + Math.sin(angle) * (height / 3) - eyeRadius;
+            eye.style.left = `${eyeX}px`;
+            eye.style.top = `${eyeY}px`;
+        });
+    </script>
+</body>
+</html>
