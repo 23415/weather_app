@@ -24,7 +24,7 @@ const serverStart = http.createServer((req,res)=>{
             let realD = arrData.map((val)=>replaceData(homeFile,val));
             let concetratedData = realD.join(" ");
             res.writeHead(200,{'Content-Type' : 'html'});
-            fs.writeFileSync('rendered.html',concetratedData);
+            fs.writeFileSync('index.html',concetratedData);
             res.write(concetratedData);
             res.end();
             console.log(response.data);
