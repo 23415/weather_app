@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const axios  = require("axios");
 
-const homeFile = fs.readFileSync("index.html","UTF-8");
+const homeFile = fs.readFileSync("index.txt","UTF-8");
 console.log("successfully loaded")
 
 const replaceData = (oldVal,newVal) => { 
